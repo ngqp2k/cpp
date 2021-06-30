@@ -15,10 +15,10 @@ typedef unsigned long long ull;
 typedef pair<int, int> II;
 
 
-void File(){
-    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-		freopen("in1", "r",stdin);
-		freopen("ou1", "w",stdout);
+void File() {
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+	freopen("in1", "r", stdin);
+	freopen("ou1", "w", stdout);
 }
 
 
@@ -27,6 +27,6 @@ void solve() {
 }
 
 int main() {
-  File();
-  return 0;
+	File();
+	return 0;
 }
