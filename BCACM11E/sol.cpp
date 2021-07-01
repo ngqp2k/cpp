@@ -21,8 +21,8 @@ int n;
 
 void File() {
 	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-	freopen("in1", "r", stdin);
-	freopen("ou1", "w", stdout);
+	// freopen("in1", "r", stdin);
+	// freopen("ou1", "w", stdout);
 }
 
 void reset() {
