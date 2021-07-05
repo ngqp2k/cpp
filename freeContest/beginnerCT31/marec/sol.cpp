@@ -16,10 +16,30 @@ typedef long long ll;
 typedef unsigned long long ull;
 typedef pair<int, int> II;
 
-int32_t main() {
-	ios_base::sync_with_stdio(false); 
-	cin.tie(nullptr);
-	// FO(1);
+vector<int> cnt(1010, 0);
+set<int> ss;
 
+int32_t main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr);
+
+	int n; cin >> n;
+	int res = 0;
+
+	for (int i = 0; i < n; ++i){
+		int x; cin >> x;
+		cnt[x]++;
+		if (cnt[x] >= 2)
+			ss.insert(x);
+	}
+
+	if (ss.size() == 1)
+		cout << 1;
+	else{
+		for(auto i: ss)
+			if (cnt[i] >= 4)
+				res++;
+		cout << res + ss.size() * (ss.size() - 1) / 2;
+	}
 	return 0;
 }

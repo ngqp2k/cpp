@@ -17,9 +17,25 @@ typedef unsigned long long ull;
 typedef pair<int, int> II;
 
 int32_t main() {
-	ios_base::sync_with_stdio(false); 
+	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr);
 	// FO(1);
+	int tt; cin >> tt;
+	while (tt--) {
+		int m, n; cin >> m >> n;
+		if (m == 1){
+			cout << 1 << "\n";
+			continue;
+		}
 
+		int res = 0;
+		int time = n / 3;
+		res = 2 * time;
+		n -= 3 * time;
+		if (n != 0)
+			res++;
+
+		cout << res << "\n";
+	}
 	return 0;
 }
