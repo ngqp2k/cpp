@@ -13,11 +13,13 @@ string testCase(int n){
     }
 }
 
+const string task = "difnple";
+
 int main()
 {
     srand(time(NULL));
 
-    for (int iTest = 0; iTest < 10; iTest++)
+    for (int iTest = 0; iTest < 100; iTest++)
     {
         system(("sol.exe<test/input." + testCase(iTest) + ">ouBL").c_str());
         if (system(("fc ouBL test/output." + testCase(iTest)).c_str()) != 0)

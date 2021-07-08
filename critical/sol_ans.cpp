@@ -68,5 +68,6 @@ int main() {
         dfs(i, g[i].n_child, index, count, g);
     }
     double result = double(count / 2) / double(n);
+    cout << result;
     return 0;
 }

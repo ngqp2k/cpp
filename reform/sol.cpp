@@ -6,42 +6,45 @@
 #define FO(x) {freopen("in"#x,"r",stdin);freopen("ou"#x,"w",stdout);}
 
 using namespace std;
-const int N = 2e5 + 7;
+const int N = 2e5 + 10;
 const int LOG = 20;
 const int MOD = 1e9 + 7 ;
 const int INF = 1e9 + 7;
 const long long INFLL = 1e18 + 7;
 
-// typedef long long int;
+typedef long long ll;
+typedef unsigned long long ull;
 typedef pair<int, int> II;
 
 int n, m;
-int num[N], low[N], f[N];
-int timeDfs = 0, sc = 0, ans = 0;
+vector<int> g[N], scc[N];
+int num[N], low[N], totalScc[N], root[N], f[N];
+
 bool vis[N];
 
-vector<int> g[N];
-int bridges;
-vector<int> part[N];
+vector<II> bridges;
 
-void dfs_1(int u) {
+int timeDfs = 0, part = 0;
+
+void dfs1(int u){
 	if (vis[u]) return;
-	vis[u] = true;
-	part[sc].pb(u);
-	for (int v : g[u])
-		dfs_1(v);
+	vis[u] = true, root[u] = part;
+	totalScc[part]++;
+	for(int v: g[u])
+		dfs1(v);
 }
 
-void dfs_2(int u, int pre) {
-	num[u] = low[u] = ++timeDfs;
-	for (int v : g[u]) {
-		if (v == pre) continue;
-		if (num[v] == 0) {
-			dfs_2(v, u);
+void dfs2(int u, int pre){
+	low[u] = num[u] = ++timeDfs;
+	for(int v: g[u]){
+		if (v == pre)
+			continue;
+		if (num[v] == 0){
+			dfs2(v, u);
 			f[u] += f[v];
 			if (low[v] > num[u]){
-				bridges++;
-				ans += f[v] * (n - f[v]) - 1;
+				// u - v is bridges
+				bridges.pb(II(u, v));
 			}
 			low[u] = min(low[u], low[v]);
 		}
@@ -51,39 +54,42 @@ void dfs_2(int u, int pre) {
 }
 
 int32_t main() {
-	ios_base::sync_with_stdio(false);
+	ios_base::sync_with_stdio(false); 
 	cin.tie(nullptr);
-	FO(1);
+	// FO(1);
 	cin >> n >> m;
-	for (int i = 1; i <= m; ++i) {
+	for(int i = 1; i <= m; ++i) {
 		int u, v; cin >> u >> v;
 		g[u].pb(v);
 		g[v].pb(u);
 	}
 
 	memset(vis, false, sizeof vis);
-	for (int i = 1; i <= n; ++i)
-		if (!vis[i]) {
-			sc++;
-			dfs_1(i);
+	for(int i = 1; i <= n; ++i)
+		if (!vis[i]){
+			part++;
+			dfs1(i);
 		}
-	if (sc > 2) {
-		cout << 0;
-		exit(0);
-	}
-	for (int i = 1; i <= n; ++i)
-		f[i] = 1;
 
-	for (int i = 1; i <= n; ++i)
-		if (num[i] == 0) {
-			dfs_2(i, i);
+
+	if (part > 2)
+		cout << 0;
+	else
+		for(int i = 1; i <= n; ++i) f[i] = 1;
+		for(int i = 1; i <= n; ++i) 
+			if (num[i] == 0)
+				dfs2(i, i);
+
+		if (part == 1){
+			int ans = 0;
+			for(auto t: bridges){
+				ans += f[t.se] * (n - f[t.se]) - 1;
+			}
+			ans += (n * (n - 1) / 2 - m) * (m - bridges.size());
+			cout << ans;
 		}
-	if (sc == 2) {
-		cout << (m - bridges) * part[1].size() * part[2].size();
-		return 0;
-	}
-	int sumEdge = n * (n - 1) / 2;
-	ans += (m - bridges) * (sumEdge - m);
-	cout << ans;
+		else if (part == 2){
+			cout << (m - bridges.size()) * totalScc[1] * totalScc[2] << "\n";
+		}
 	return 0;
 }
