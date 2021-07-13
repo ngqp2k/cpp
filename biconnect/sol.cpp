@@ -10,7 +10,6 @@ int num[N], low[N], parent[N];
 stack<II> ss;
 set<int> res[N];
 
-
 int timeDfs = 0, cnt = 0;
 
 void dfs(int u) {

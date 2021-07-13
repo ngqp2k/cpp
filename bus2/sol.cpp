@@ -2,8 +2,8 @@
 #define fi first
 #define se second
 #define pb push_back
-//#define int long long
-#define FO(x) {freopen("in"#x,"r",stdin);freopen("ou"#x,"w",stdout);}
+// #define int long long
+// #define FO(x) {freopen("in"#x,"r",stdin);freopen("ou"#x,"w",stdout);}
 
 using namespace std;
 const int N = 1000 + 10;
@@ -15,88 +15,79 @@ const long long INFLL = 1e18 + 7;
 typedef long long ll;
 typedef unsigned long long ull;
 typedef pair<int, int> II;
+typedef pair<int, II> III;
 
 int n, m;
-int a[N][N], dp[N][N], A[N * N];
-vector<int> g[N];
+int a[N][N], f[N][N];
+int dx[4] = { 0, 1, 0, -1 };
+int dy[4] = { 1, 0, -1, 0 };
 
-int getId(int i, int j) {
-	return (i - 1) * m + j;
+priority_queue<III, vector<III>, greater<III>> Q;
+
+void Dijkstra(){
+	// for(int i = 0; i <= n + 1; ++i){
+	//     for(int j = 0; j <= m + 1; ++j)
+	//         cout << a[i][j] << "  ";
+	//     cout << "\n";
+	// }
+	// return;
+	f[1][1] = 0;
+	Q.push(III(1, II(1, 1)));
+
+	while (!Q.empty()) {
+		int u = Q.top().se.fi;
+		int v = Q.top().se.se;
+		Q.pop();
+
+		if (u == n && v == m)
+			break;
+
+		for(int i = 0; i < 4; ++i)
+			if (a[u + dx[i]][v + dy[i]] != -1) {
+				int step;
+				if (f[u][v] % 2 == 0)
+					if (a[u][v] == 0)
+						step = 2;
+					else
+						step = 1;
+				else
+					if (a[u][v] == 0)
+						step = 1;
+					else	
+						step = 2;
+				if (f[u + dx[i]][v + dy[i]] > f[u][v] + step) {
+					f[u + dx[i]][v + dy[i]] = f[u][v] + step;
+					Q.push(III(f[u][v] + step, II(u + dx[i], v + dy[i])));
+				}
+			}
+	}
+
+	if (f[n][m] % 2 == 0)
+		if (a[n][m] == 0)
+			cout << f[n][m] + 1;
+		else
+			cout << f[n][m];
+	else
+		if (a[n][m] == 0)
+			cout << f[n][m];
+		else
+			cout << f[n][m] + 1;
 }
 
 int32_t main() {
-	ios_base::sync_with_stdio(false);
+	ios_base::sync_with_stdio(false); 
 	cin.tie(nullptr);
-	// FO(1);
 	cin >> n >> m;
-	for (int i = 1; i <= n; ++i)
-		for (int j = 1; j <= m; ++j) {
-			cin >> a[i][j];
-			A[getId(i, j)] = a[i][j];
-		}
+}
 
-	// init graph
-	for (int i = 1; i < n; ++i) {
-		for (int j = 1; j < m; ++j) {
-			int u = getId(i, j);
-			g[u].pb(getId(i, j + 1));
-			g[u].pb(getId(i + 1, j));
-		}
+	for(int i = 1; i <= n; ++i){
+		a[i][0] = -1;
+		a[i][m + 1] = -1;
 	}
 
-	for (int i = 1; i < m; ++i) {
-		int u = getId(n, i);
-		g[u].pb(getId(n, i + 1));
-	}
+	memset(f, 0x3f, sizeof f);
 
-	for (int i = 1; i < n; ++i) {
-		int u = getId(i, m);
-		g[u].pb(getId(i + 1, m));
-	}
+	Dijkstra();
 
-	vector<int> f(N * N, INF);
-
-	f[1] = A[1] == 0 ? 1 : 0;
-
-	queue<int> Q;
-	Q.push(1);
-
-	while (!Q.empty()) {
-		int u = Q.front();
-		Q.pop();
-		bool ok = f[u] % 2 == 0; // ok = true - cac den giu nguyen
-		bool ok2;
-		if (ok)
-			if (A[u] == 0)
-				ok2 = false;
-			else
-				ok2 = true;
-		else {
-			if (A[u] == 0)
-				ok2 = true;
-			else
-				ok2 = false;
-		}
-
-		for (int v : g[u]) {
-			if (ok2)
-				f[v] = min(f[v], f[u] + 1);
-			else
-				f[v] = min(f[v], f[u] + 2);
-			Q.push(v);
-		}
-	}
-	if (A[n * m] == 1) {
-		if (f[n * m] % 2 == 1)
-			cout << f[n * m] + 1;
-		else
-			cout << f[n * m] ;
-	}
-	else {
-		if (f[n * m] % 2 == 1)
-			cout << f[n * m];
-		else
-			cout << f[n * m] + 1;
-	}
 	return 0;
 }
