@@ -18,6 +18,7 @@ int32_t main() {
 	cin.tie(nullptr);
 	FO(1);
 	int a, b, c; cin >> a >> b >> c;
+
 	cout << max(a + b, max(b + c, c + a));
 	return 0;
 }

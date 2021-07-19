@@ -17,12 +17,12 @@ int low[mxN + 1];
 int tail[mxN + 1];
 int timeDFS = 0;
 
-void buildDFS(int u, int prev){
+void buildDFS(int u, int prev) {
 	num[u] = low[u] = ++timeDFS;
-	for(int v: g[u]){
+	for (int v : g[u]) {
 		if (v == prev)
 			continue;
-		if (!num[v]){
+		if (!num[v]) {
 			buildDFS(v, u);
 			low[u] = min(low[u], low[v]);
 		}
@@ -35,10 +35,10 @@ void buildDFS(int u, int prev){
 
 void print();
 
-void solve(){
+void solve() {
 	cin >> n >> m;
 	memset(num, 0, sizeof(num));
-	for(int i=i;i<=m;++i){
+	for (int i = i; i <= m; ++i) {
 		int u, v;
 		cin >> u >> v;
 		g[u].pb(v);
@@ -50,13 +50,13 @@ void solve(){
 	print();
 }
 
-int main(){
+int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(0); cout.tie(0);
 	solve();
 	return 0;
 }
-void print(){
+void print() {
 	// for(int i=1;i<=n;++i){
 	//   cout << i << ": ";
 	//   for(int j: f[i])
@@ -65,17 +65,17 @@ void print(){
 	// }
 	// num
 	cout << "num[]: ";
-  for(int i=1;i<=n;++i)
+	for (int i = 1; i <= n; ++i)
 		cout << num[i] << " ";
 	cout << "\n";
 	// tail
 	cout << "tail[]: ";
-  for(int i=1;i<=n;++i)
+	for (int i = 1; i <= n; ++i)
 		cout << tail[i] << " ";
 	cout << "\n";
 	// low
 	cout << "low[]: ";
-  for(int i=1;i<=n;++i)
+	for (int i = 1; i <= n; ++i)
 		cout << low[i] << " ";
 	cout << "\n";
 
