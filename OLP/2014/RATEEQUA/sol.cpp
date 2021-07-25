@@ -3,7 +3,6 @@
 #define se second
 #define pb push_back
 #define int unsigned long long
-#define FO(x) {freopen("in"#x,"r",stdin);freopen("ou"#x,"w",stdout);}
 
 using namespace std;
 const int N = 1e5 + 10;
@@ -49,7 +48,8 @@ int32_t main() {
 	Matrix a = Matrix(0, 1, 1, 1);
 	auto res = powMatrix(a, n - 1);
 
-	cout << (int)(((res.a11 * a1 % MOD) % MOD + (res.a12 * a1 % MOD) % MOD + 
-			(res.a21 * a1 % MOD) % MOD + (res.a22 * a1 % MOD) % MOD) % MOD - a1 % MOD + MOD) % MOD << "\n";
+	int ans = (((res.a11 * a1 % MOD) % MOD + (res.a12 * a1 % MOD) % MOD + 
+			(res.a21 * a1 % MOD) % MOD + (res.a22 * a1 % MOD) % MOD) % MOD - a1 % MOD + MOD) % MOD;
+	cout << ans;
 	return 0;
 }

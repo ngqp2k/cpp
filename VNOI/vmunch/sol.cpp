@@ -1,54 +1,61 @@
-#include<bits/stdc++.h>
-#define pb push_back
+#include <bits/stdc++.h>
 #define fi first
 #define se second
-
+#define pb push_back
+#define int long long
 using namespace std;
 
-const int N = 101;
+const int mxN = 110;
+const int dx[] = { -1, 0, 0, 1 };
+const int dy[] = { 0, -1, 1, 0 };
 
-typedef pair<int, int> II;
+char g[mxN][mxN];
+bool vis[mxN][mxN];
+int depth[mxN][mxN];
 
-vector< vector<int> > a, f;
 
-int dx[4] = {0, 1, 0, -1};
-int dy[4] = {1, 0, -1, 0};
+int32_t main() {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  typedef pair<int, int> II;
+  II st, en;
 
-II st, en;
+  int R, C; cin >> R >> C;
+  for (int i = 1; i <= R; ++i) {
+    for (int j = 1; j <= C; ++j) {
+      cin >> g[i][j];
+      if (g[i][j] == 'B') st = II(i, j);
+      if (g[i][j] == 'C') en = II(i, j);
+    }
+  }
 
-int main() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(nullptr);
-	int n, m; cin >> n >> m;
-	a.resize(n + 2, vector<int> (m + 2, 1));
-	f.resize(n + 2, vector<int> (m + 2, 0));
-	for (int i = 1; i <= n; ++i)
-		for (int j = 1; j <= m; ++j) {
-			char ch; cin >> ch;
-			if (ch != '*')
-				a[i][j] = 0;
-			if (ch == 'B') st = II(i, j);
-			if (ch == 'C') en = II(i, j);
-		}
-	queue<II> Q;
-	// BFS - begin from st
-	a[st.fi][st.se] = 1;
-	Q.push(st);
+  memset(vis, false, sizeof(vis));
 
-	while (!Q.empty()) {
-		int x = Q.front().fi;
-		int y = Q.front().se;
-		Q.pop();
+  
+  queue<II> Q;
+  Q.push(st);
+  vis[st.fi][st.se] = true;
+  depth[st.fi][st.se] = 0;
+  while (!Q.empty()) {
+    int u = Q.front().fi;
+    int v = Q.front().se;
+    Q.pop();
 
-		for (int i = 0; i < 4; ++i)
-			if (a[x + dx[i]][y + dy[i]] == 0) {
-				if (x + dx[i] == en.fi && y + dy[i] == en.se) {
-					cout << f[x][y] + 1;
-					return 0;
-				}
-				a[x + dx[i]][y + dy[i]] = 1;
-				Q.push(II(x + dx[i], y + dy[i]));
-				f[x + dx[i]][y + dy[i]] = f[x][y] + 1;
-			}
-	}
+    if (u == en.fi && v == en.se) {
+      cout << depth[u][v];
+      return 0;
+    }
+
+    for(int i = 0; i < 4; ++i) {
+      int x = u + dx[i];
+      int y = v + dy[i];
+      if (x < 1 || x > R || y < 1 || y > C) continue;
+      if (g[x][y] == '*') continue;
+      if (vis[x][y] == true) continue;
+      vis[x][y] = true;
+      Q.push(II(x, y));
+      depth[x][y] = depth[u][v] + 1;
+    }
+  }
+
 }

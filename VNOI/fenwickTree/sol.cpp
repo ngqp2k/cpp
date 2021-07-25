@@ -24,6 +24,7 @@ void updateRange(int l, int r, int val) {
 	updatePoint(bit2, r + 1, -val);
 }
 
+
 int getSum(int f[], int u) {
 	int i = u, sum = 0;
 	while (i > 0) {
