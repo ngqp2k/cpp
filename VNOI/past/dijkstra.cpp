@@ -1,69 +1,69 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 #define fi first
 #define se second
-
 using namespace std;
 
 const int INF = (int) 1e9 + 7;
-const int mxN = 1e5;
-int n, m, s, f;
-vector< vector< pair<int, int> > > c;
+typedef pair<int, int> II;
 
-class cmp{
-	public:
-	bool operator() (pair<int, int> a, pair<int, int> b){
+int n, m, s, f;
+vector< vector<II> > c;
+
+class cmp {
+public:
+	bool operator() (II a, II b) {
 		return a.se > b.se;
 	}
 };
 
-void dijkstra(int start, int finish){
-	vector<int> d(n + 1, INF); // d[i] la do dai ngan nhat tu start -> i
-	vector<int> prev(n + 1); // danh dau duong di
+void dijkstra(int start, int finish) {
+	vector<int> d(n + 1, INF), prev(n + 1);
 	vector<bool> selected(n + 1, false);
-	priority_queue< pair<int, int>, vector< pair<int, int> >, cmp > q;
+	priority_queue<II, vector<II>, cmp > Q;
 
 	d[start] = 0;
-	q.push(make_pair(start, d[start]));
+	Q.push(II(start, d[start]));
 	prev[start] = -1;
 
-	while(q.empty() == false){
-		auto p = q.top();
-		q.pop();
-		int u = p.fi;
+	while (!Q.empty()) {
+		int u = Q.top().fi;
+		Q.pop();
 		selected[u] = true;
-		for(auto v: c[u]){
-	    if (!selected[v.fi] && d[u] + v.se < d[v.fi]){ // cap nhat
+		if (u == finish) {
+			cout << d[finish] << "\n";
+			vector<int> path;
+			int i = finish;
+			while (i != -1) {
+				path.push_back(i);
+				i = prev[i];
+			}
+			reverse(path.begin(), path.end());
+			for (int i : path)
+				if (i != finish)
+					cout << i << " --> ";
+				else
+					cout << i;
+			return;
+		}
+		for (auto v : c[u]) {
+			if (!selected[v.fi] && d[u] + v.se < d[v.fi]) {
 				d[v.fi] = d[u] + v.se;
 				prev[v.fi] = u;
-				q.push(make_pair(v.fi, d[v.fi]));
+				Q.push(II(v.fi, d[v.fi]));
 			}
 		}
 	}
-
-	cout << d[finish] << "\n";
-	cout << finish;
-	int i = prev[finish];
-	while(i != -1){
-		cout << " <- " << i;
-		i = prev[i];
-	}
 }
 
-void solve(){
+int main() {
+	ios_base::sync_with_stdio(false); cin.tie(nullptr);
+	freopen("in", "r", stdin);
+	freopen("ou", "w", stdout);
 	cin >> n >> m >> s >> f;
 	c.resize(n + 1);
-	for(int i=1;i<=m;++i){
-		int u, v, val;
-		cin >> u >> v >> val;
-		c[u].push_back(make_pair(v, val));
-		c[v].push_back(make_pair(u, val));
+	for (int i = 1; i <= m; ++i) {
+		int u, v, val; cin >> u >> v >> val;
+		c[u].push_back(II(v, val)), c[v].push_back(II(u, val));
 	}
 	dijkstra(s, f);
-}
-
-int main(){
-	ios_base::sync_with_stdio(false);
-	cin.tie(0); cout.tie(0);
-	solve();
-	return 0;
 }

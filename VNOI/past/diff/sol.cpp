@@ -68,9 +68,12 @@ vector<int> subBigNum(vector<int> a, vector<int> b, bool &ok) {
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr), cout.tie(nullptr);
+    
     vector<int> num2, num1;
-    int a, b;
-    cin >> a >> b;
+    int a = 1991, b = 1998;
+    //1499 1997
+    // cin >> a >> b;
+    clock_t aa = clock();
     powerBigNum(a, b, num1);
     powerBigNum(b, a, num2);
     bool minus;
@@ -82,5 +85,7 @@ int main() {
     if (minus) cout << '-';
     for (int i: res)
         cout << i;
+    clock_t bb = clock();
+    cout << "\nTime: " << (bb - aa) * 1.0 / 1000;
     return 0;
 }

@@ -3,12 +3,12 @@ syntax on
 au GUIEnter * simalt ~x
 
 set number
-set ts=4 
-set sw=4 
+set ts=2 
+set sw=2 
 set si 
 set cb=unnamed
 set hls
-set guifont=Fira_Code:h13:cANSI:qDRAFT
+set guifont=Fira_Code:h15:cANSI:qDRAFT
 set autoread
 set autowrite
 set backspace=indent,eol,start
@@ -39,7 +39,6 @@ call plug#begin('~/.vim/plugged')
 	Plug 'preservim/nerdcommenter'
 	Plug 'kien/ctrlp.vim'
 	Plug 'altercation/vim-colors-solarized'
-	Plug 'sonph/onehalf', { 'rtp': 'vim' }
 call plug#end()
 
 nnoremap <leader>n :NERDTreeFocus<CR>
@@ -68,14 +67,14 @@ autocmd BufNewFile *.cpp 0r ~/vim/skeleton.cpp
 colorscheme default
 
 if has("gui_running")
-	colorscheme onehalflight
+	set bg=light
+	colorscheme solarized
 	let g:solarized_contrast='normal'
 	let g:solarized_visibility='normal'
 endif
 
 
 " ----------Bind-----------
-nnoremap <silent><c-s> :<c-u>update<CR>
 inoremap { {}<Left>
 inoremap {<CR> {<CR>}<Esc>O
 inoremap {{ {
