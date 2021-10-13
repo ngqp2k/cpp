@@ -1,52 +1,21 @@
-// C++ program to find number of ways to wear hats
 #include <bits/stdc++.h>
+#define fi first
+#define se second
+#define pb push_back
+#define mk make_pair
+#define all(x) x.begin(), x.end()
+#define rep(i, n) for(int i = 0; i < (n); ++i)
 #define MOD 1000000007
+#define int long long
 using namespace std;
 
-// nguyen quang phu
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef pair<int, int> ii;
+typedef map<int, int> mi;
 
-vector<int> capList[101];
-int dp[1025][101], allmask;
-
-long long int countWaysUtil(int mask, int i) {
-	if (mask == allmask) return 1;
-	if (i > 100) return 0;
-	if (dp[mask][i] != -1) return dp[mask][i];
-
-	long long int ways = countWaysUtil(mask, i + 1);
-	int size = capList[i].size();
-
-	for (int j = 0; j < size; j++) {
-		if (mask & (1 << capList[i][j]))
-			continue;
-		else
-			ways += countWaysUtil(mask | (1 << capList[i][j]), i + 1);
-		ways %= MOD;
-	}
-	return dp[mask][i] = ways;
-}
-
-void countWays(int n) {
-	string temp, str;
-	int x;
-	getline(cin, str);
-	for (int i = 0; i < n; i++) {
-		getline(cin, str);
-		stringstream ss(str);
-		while (ss >> temp) {
-			stringstream s;
-			s << temp;
-			s >> x;
-			capList[x].push_back(i);
-		}
-	}
-	allmask = (1 << n) - 1;
-	memset(dp, -1, sizeof dp);
-	cout << countWaysUtil(0, 1) << endl;
-}
-
-int main() {
-	int n; cin >> n;
-	countWays(n);
-	return 0;
+int32_t main() {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+  int n; cin >> n;
 }

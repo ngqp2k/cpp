@@ -1,25 +1,22 @@
-#include <bits/stdc++.h>
-#define fi first
-#define se second
-#define pb push_back
-#define int long long
-#define FO(x) {freopen("in"#x,"r",stdin);freopen("ou"#x,"w",stdout);}
-
+#include <iostream>
+#include <algorithm>
+#include <cmath>
 using namespace std;
-const int N = 1e5 + 10;
-const int LOG = 20;
-const int MOD = 1e9 + 7 ;
-const int INF = 1e9 + 7;
-const long long INFLL = 1e18 + 7;
+
+const long long INFLL = (long long)1e18 + 7;
 
 typedef long long ll;
 typedef unsigned long long ull;
 typedef pair<int, int> II;
 
 void solve(){
-	int k; cin >> k;
-	// 2 * n * m + n + m = 2 * k - 1
-	int i = -1, j = -1, Min = INFLL;
+	long long k; cin >> k;
+	// 1 <= m <= n
+	// n - m nho nhat
+	// 2nm + n + m = 2k - 1
+	// m(2n + 1) = 2k - 1 - n
+	int i = -1, j = -1;
+	long long Min = INFLL;
 	for(int n = 1; n <= (int) sqrt(2 * k); ++n) {
 		if (((2 * k - 1) - n) % (2 * n + 1) == 0) {
 			int m = ((2 * k - 1) - n) / (2 * n + 1);
@@ -29,14 +26,16 @@ void solve(){
 			}
 		}
 	}
-	cout << i << " " << j << "\n";
+	if (i == 0 || (i == -1 && j == -1))
+		cout << -1;
+	else cout << i << " " << j;
 }
 
-int32_t main() {
+int main() {
 	ios_base::sync_with_stdio(false); 
 	cin.tie(nullptr);
-	// FO(1);
-	int tt; cin >> tt;
+	int tt = 1; 
+	//cin >> tt;
 	while(tt--) {
 		solve();
 	}

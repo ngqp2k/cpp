@@ -23,7 +23,7 @@ int main() {
 		for (int j = 0; j < N; ++j)
 			if (i & (1 << j)) {
 				for (int k = 0; k < N; ++k)
-					if ((i & (1 << k) && (k != j) && (adj[k][j] == 1) && dp[k][i ^ (1 << j)] == true)) {
+					if (i & (1 << k) && (k != j) && (adj[k][j] == 1) && dp[k][i ^ (1 << j)] == true) {
 						dp[j][i] = true;
 					}
 			}

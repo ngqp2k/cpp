@@ -10,15 +10,18 @@ int main() {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   srand(time(NULL));
-  freopen("in4.txt", "w", stdout);
-  int n = 200, m = 200;
-  cout << n << " " << m << "\n";
-  cout << Rand(2, n) << " " << Rand(2, m) << "\n";
-  cout << Rand(2, n) << " " << Rand(2, m) << "\n";
-  for(int i = 1; i <= n; ++i) {
-    for(int j = 1;j <= m; ++j) {
-        cout << Rand(1, 30000) << " ";
-    }
-    cout << "\n";
-  }
+  freopen("in1", "w", stdout);
+  int n = 100;
+  vector<int> a(n), b(n);
+  for (int i = 0; i < n; ++i)
+    a[i] = Rand(-1000, 1000);
+  for (int j = 0; j < n; ++j)
+    b[j] = Rand(1, 2);
+
+  cout << n << "\n";
+  for (int i: a)
+    cout << i << " ";
+  cout << "\n";
+  for (int i: b)
+    cout << i << " ";
 }

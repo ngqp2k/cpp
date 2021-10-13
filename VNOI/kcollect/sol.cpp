@@ -88,23 +88,23 @@ int main() {
   sumScc.resize(m * n + 1, 0);
   deleted.resize(m * n + 1, false);
   root.resize(m * n + 1, 0);
-  for(int i=1;i<=m;++i)
-    for(int j=1;j<=n;++j)
+  for (int i = 1; i <= m; ++i)
+    for (int j = 1; j <= n; ++j)
       if (c[i][j] != '#' && !num[getId(i, j)])
         dfs(getId(i, j));
-  for(int i=1;i<=m;++i)
-    for(int j=1;j<=n;++j){
+  for (int i = 1; i <= m; ++i)
+    for (int j = 1; j <= n; ++j) {
       int u = getId(i, j);
-      for(int v: g[u]){
+      for (int v : g[u]) {
         if (root[v] != root[u])
           h[root[u]].pb(root[v]);
       }
     }
   //test();
   vector<int> f(n * m  + 1, 0);
-  for(int i=1;i<=scc;++i){
+  for (int i = 1; i <= scc; ++i) {
     f[i] = sumScc[i];
-    for(int j: h[i])
+    for (int j : h[i])
       f[i] = max(f[i], f[j] + sumScc[i]);
   }
   cout << f[root[1]];
