@@ -19,4 +19,7 @@ typedef map<int, int> mi;
 int32_t main() {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
+  cout << "nguyen quang phu\n";
+  int n; cin >> n;
+  cout << n;
 }
