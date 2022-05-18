@@ -31,6 +31,7 @@ int32_t main() {
 		for (int j = i; j <= n; ++j) {
 			if (i == j) dp[i][j] = dp[i - 1][j - 1] + v[i][j];
 			else dp[i][j] = max(dp[i][j - 1], dp[i - 1][j - 1] + v[i][j]);
+			// Wrong ans !!! - maihuong13
 		}
 	}
 
