@@ -1,8 +1,4 @@
 #include <bits/stdc++.h>
-#define fi first
-#define se second
-#define pb push_back
-#define int long long
 using namespace std;
 
 int a[11];
@@ -10,7 +6,7 @@ char rooms[11];
 vector<int> robots[11];
 
 
-void print() {
+void solve() {
   vector<int> cnt(11, 0);
   for (int i = 1; i <= 9; ++i) {
     for (int j = 1; j <= a[i]; ++j) {
