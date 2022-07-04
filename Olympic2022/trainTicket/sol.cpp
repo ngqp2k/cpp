@@ -46,14 +46,34 @@ void debug_out(Head H, Tail... T)
 
 #define dbg(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
 
+const int mxN = 100000 + 11;
+
+int L[4], C[4];
+int n, s, f;
+int d[mxN];
+
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    vector<int> a = {1,2,5};
-    string s = "Hello world";
+    // cin >> L[1] >> L[2] >> L[3] >> C[1] >> C[2] >> C[3];
+    // cin >> n >> s >> f;
+    // for (int i = 2; i <= n; ++i)
+    //     cin >> d[i];
+    //
 
-    dbg(a, s);
+    vector<int> a = {1,5,7,8,9,11,15,19,20};
+
+
+    int v; cin >> v;
+
+    int pos1 = lower_bound(a.begin(), a.end(), v) - a.begin();
+    int pos2 = upper_bound(a.begin(), a.end(), v) - a.begin();
+    dbg(a);
+    string s1 = "lower_bound", s2 = "upper_bound"; 
+    dbg(s1, pos1, *lower_bound(a.begin(), a.end(), v));
+    dbg(s2, pos2, *upper_bound(a.begin(), a.end(), v));
 
     return 0;
 }
+
